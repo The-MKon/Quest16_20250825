@@ -1,0 +1,29 @@
+name: CI Build & Test
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      - name: Simular build
+        run: echo "[BUILD] Arquivos verificados e build simulado com sucesso."
+
+  test:
+    name: Testes
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      - name: Simular testes
+        run: |
+          echo "[TEST] Verificando se os arquivos principais existem..."
+          ls -l index.html
+          ls -l staging/index.html
+          echo "[TEST] Testes simulados passaram."

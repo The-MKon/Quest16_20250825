@@ -1,0 +1,33 @@
+name: Staging on gh-pages push
+
+on:
+  push:
+    branches: [ "gh-pages" ]
+
+permissions:
+  contents: write
+
+jobs:
+  quick-ci-staging:
+    name: CI rápido (staging)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Teste rápido de Staging
+        run: |
+          echo "[TEST-STAGING] Verificando se o arquivo de staging existe..."
+          ls -l staging/index.html
+          echo "[TEST-STAGING] OK!"
+
+  deploy-to-staging:
+    name: Deploy para /staging (gh-pages)
+    runs-on: ubuntu-latest
+    needs: quick-ci-staging
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      - name: Deploy simulado para Staging
+        run: echo "[DEPLOY-STAGING] O push para gh-pages já aciona o GitHub Pages. Este job apenas confirma o sucesso do CI."
